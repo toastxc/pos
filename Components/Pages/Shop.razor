@@ -14,13 +14,13 @@
         @foreach (var item in items)
         {
             <div class="field has-addons">
-                <p class="control ">
-                    <a class="button has-text-black" style="background-color: @item.Color">
+                <p class="control "  >
+                    <a class="button has-text-black" style="background-color: @item.Color; width: 125px">
                         @item.Title
 
                     </a>
                 </p>
-                <p class="control">
+                <p class="control is-expanded">
                     <input type="text" id="number" name="number" class="input" value=@item.Value>
                 </p>
          
