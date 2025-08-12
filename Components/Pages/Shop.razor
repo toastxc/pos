@@ -1,0 +1,134 @@
+﻿@page "/shop"
+@rendermode InteractiveServer
+
+<PageTitle>Shop</PageTitle>
+
+<h1>Shop</h1>
+
+
+@* <!-- shop interface --> *@
+<div class="columns  is-mobile">
+
+    <div class=" column is-3">
+    
+        @foreach (var item in items)
+        {
+            <div class="field has-addons">
+                <p class="control ">
+                    <a class="button has-text-black" style="background-color: @item.Color">
+                        @item.Title
+
+                    </a>
+                </p>
+                <p class="control">
+                    <input type="text" id="number" name="number" class="input" value=@item.Value>
+                </p>
+         
+                <div class="control">
+                    <a class="button is-primary " @onclick="() => item.Value++">
+
+                        <span class="icon">
+                            <i class="fa-solid fa-chevron-up"></i>
+                        </span>
+                    
+                    </a>
+                </div>
+                <div class="control">
+                    
+                    
+                    <a class="button is-danger" @onclick="() => {if ( item.Value > 0){item.Value--;}}">
+                        <span class="icon">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </span>
+                    
+                    </a>
+                </div>
+            </div>
+                
+        
+      
+        
+
+
+        }
+    </div>
+    
+    <div class="column is-3">
+
+
+        
+    </div>
+    
+    
+    
+</div>
+
+<div class="columns">
+    <div class="column is-3">
+        <button class="button is-medium is-fullwidth is-primary">Total: $@(@items.Select(item => item.Value * item.Cost).Sum())</button>
+    </div>
+</div>
+
+
+<div class="columns">
+    <div class="column is-3">
+    
+        
+    </div>
+</div>
+
+
+@code {
+    
+  
+    
+
+
+    public class Item
+    {
+        public required string Title { get; set; }
+        public required string Color { get; set; }
+        public int Value = 0;
+        public double Cost { get; set; }
+
+    } 
+    
+    
+    List<Item> items = new List<Item>();
+    
+
+ protected override void OnInitialized() 
+
+    {
+        
+
+        var purple = "#CA5FFF";
+        var red = "#FF5F5F";
+        var yellow = "#FFDA5F";
+        
+        // start of uhhh uhhh 
+        items =
+        [
+            new Item() { Title = "$3.50 EFE", Color = purple, Cost = 3.5},
+            new Item() { Title = "$1.50 EFE", Color = purple , Cost = 1.5 },
+            new Item() { Title = "$10 Chicken", Color = red , Cost = 10},
+            new Item() { Title = "$4 Chicken", Color = red , Cost = 4},
+            new Item() { Title = "Chicken necks", Color = red , Cost = 4},
+            new Item() { Title = "10$ Fish", Color = red, Cost = 10 },
+            new Item() { Title = "Pantry 5", Color = yellow, Cost = 6 },
+            new Item() { Title = "Pantry 10", Color = yellow, Cost = 10 },
+            new Item() { Title = "Pantry 12", Color = yellow, Cost = 12 },
+        ];
+        
+       
+    } 
+    
+}
+
+
+
+
+
+
+
+
