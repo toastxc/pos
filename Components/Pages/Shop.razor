@@ -6,7 +6,19 @@
 <PageTitle>Shop</PageTitle>
 
 <h1>Shop</h1>
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>
 
 @* <!-- shop interface --> *@
 <div class="columns  is-mobile">
@@ -23,26 +35,27 @@
                     </a>
                 </p>
                 <p class="control is-expanded">
-                    <InputNumber type="text" id="number" name="number" class="input is-large" @bind-Value="item.Value"/>
+                    <InputNumber  id="number" name="number" class="input is-large" @bind-Value="item.Value"/>
                 </p>
+                
+               
                 <div class="control">
-                    <a class="button is-primary is-large" @onclick="() => item.Value++">
 
-                        <span class="icon">
-                            <i class="fa-solid fa-chevron-up"></i>
-                        </span>
-                    
-                    </a>
-                </div>
+                        <a class="button is-primary is-large" @onclick="() => { item.Value++; }">
+                            <span class="icon">
+                                <i class="fa-solid fa-chevron-up"></i>
+                            </span>
+
+                        </a>
+                    </div>
                 <div class="control">
-                    
-                    
-                    <a class="button is-danger is-large" @onclick="() => {if ( item.Value > 0){item.Value--;}}" >
-                        <span class="icon">
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </span>
-                    
-                    </a>
+          
+                        <a class="button is-danger is-large" @onclick="() => { if (item.Value > 0) { item.Value--; } }">
+                            <span class="icon">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </span>
+
+                        </a>
                 </div>
                 
             </div>
@@ -75,9 +88,7 @@
 
 @code {
     
-  
     
-
 
     public class Item
     {
