@@ -17,17 +17,16 @@
         {
             <div class="field has-addons">
                 <p class="control"  >
-                    <a class="button has-text-black" style="background-color: @item.Color; width: 125px">
+                    <a class="button has-text-black is-large" style="background-color: @item.Color; width: 175px">
                         @item.Title
 
                     </a>
                 </p>
                 <p class="control is-expanded">
-                    <input type="text" id="number" name="number" class="input" value=@item.Value>
+                    <InputNumber type="text" id="number" name="number" class="input is-large" @bind-Value="item.Value"/>
                 </p>
-         
                 <div class="control">
-                    <a class="button is-primary " @onclick="() => item.Value++">
+                    <a class="button is-primary is-large" @onclick="() => item.Value++">
 
                         <span class="icon">
                             <i class="fa-solid fa-chevron-up"></i>
@@ -38,7 +37,7 @@
                 <div class="control">
                     
                     
-                    <a class="button is-danger" @onclick="() => {if ( item.Value > 0){item.Value--;}}" >
+                    <a class="button is-danger is-large" @onclick="() => {if ( item.Value > 0){item.Value--;}}" >
                         <span class="icon">
                             <i class="fa-solid fa-chevron-down"></i>
                         </span>
