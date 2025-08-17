@@ -1,4 +1,6 @@
 ﻿@page "/shop"
+@using System.Text.Json
+@using Microsoft.AspNetCore.Mvc
 @rendermode InteractiveServer
 
 <PageTitle>Shop</PageTitle>
@@ -14,7 +16,7 @@
         @foreach (var item in items)
         {
             <div class="field has-addons">
-                <p class="control "  >
+                <p class="control"  >
                     <a class="button has-text-black" style="background-color: @item.Color; width: 125px">
                         @item.Title
 
@@ -36,16 +38,18 @@
                 <div class="control">
                     
                     
-                    <a class="button is-danger" @onclick="() => {if ( item.Value > 0){item.Value--;}}">
+                    <a class="button is-danger" @onclick="() => {if ( item.Value > 0){item.Value--;}}" >
                         <span class="icon">
                             <i class="fa-solid fa-chevron-down"></i>
                         </span>
                     
                     </a>
                 </div>
+                
             </div>
                 
         
+            
       
         
 
@@ -98,7 +102,6 @@
         var red = "#FF5F5F";
         var yellow = "#FFDA5F";
         
-        // start of uhhh uhhh 
         items =
         [
             new Item() { Title = "$3.50 EFE", Color = purple, Cost = 3.5},

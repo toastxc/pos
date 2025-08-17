@@ -1,0 +1,232 @@
+﻿@page "/user"
+@using System.Text.Json
+@using System.Text.RegularExpressions
+@using Microsoft.AspNetCore.Mvc
+@rendermode InteractiveServer
+
+<PageTitle>User</PageTitle>
+
+<h1>User Create</h1>
+
+
+@* <!-- shop interface --> *@
+<div class="columns  is-mobile">
+    <div class=" column is-narrow">
+
+        
+        <form method="post" @onsubmit="Submit" @formname="user-new" >
+            <fieldset disabled="@_disabled" >
+          
+            <div class="field">
+                <label class="label">First Name</label>
+                <div class="control has-icons-right">
+                    <InputText class="@ClassRegex(Model.FirstName, RegexName)" type="text" @bind-Value="Model!.FirstName"/>
+                    <span class="icon is-small is-right">
+                        <i  class="@IconRegex(Model.FirstName, RegexName)"  ></i>
+                    </span>
+                </div>
+                
+            </div>
+
+            <div class="field">
+                <label class="label">Last Name</label>
+                <div class="control has-icons-right">
+                    <InputText class="@ClassRegex(Model.LastName, RegexName)" type="text" @bind-Value="Model!.LastName"/>
+                    <span class="icon is-small is-right">
+                        <i  class="@IconRegex(Model.LastName, RegexName)"  ></i>
+                    </span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Phone</label>
+                <div class="control has-icons-left has-icons-right">
+                    <InputText class="@ClassRegex(Model.Phone, RegexPhone)" type="text" placeholder="04XXXXXXXXXX" @bind-Value="Model!.Phone"/>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-phone"></i>
+                    </span>
+                    <span class="icon is-small is-right">
+                        <i  class="@IconRegex(Model.Phone, RegexPhone)"  ></i>
+                    </span>
+                </div>
+            </div>
+
+
+
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left has-icons-right ">
+
+                    <InputText class="@ClassRegex(Model.Email, RegexEmail)" type="email" placeholder="Email" @bind-Value="Model!.Email"/>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                    <span class="icon is-small is-right">
+                        <i  class="@IconRegex(Model.Email, RegexEmail)"  ></i>
+                    </span>
+                </div>
+            </div>
+
+            <p>@Model.Email</p>
+            <div class="field">
+                <label class="label">Card Type</label>
+                <div class="control">
+                    <div class="select">
+                        <InputSelect @bind-Value="Model.CardType">
+                            <option value="IND">Individual (IND)</option>
+                        </InputSelect>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Agency</label>
+                <div class="control">
+                    <div class="select">
+                        <InputSelect @bind-Value="Model.Agency">
+                            <option value="ANGL0">ANGL0</option>
+                        </InputSelect>
+                    </div>
+                </div>
+            </div>
+            </fieldset> 
+            <br/>
+            <div hidden="@Flip(_disabled)">
+                
+       
+            <div class="field has-addons" >
+        
+                <div class="control">
+            
+                    <p class="button is-primary">ID</p>
+                </div>
+                <div class="control has-icons-left ">
+
+                    <input class="input is-primary" type="text" readonly="@true" disabled="@false" value="@Model!.Id"/>
+                    <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                    </span>
+                </div>
+                <div class="control">
+                    <button class="button is-link is-light" type="reset" @onclick="Clear">
+                        Clear
+                    </button>
+                </div>
+            </div>
+            </div>
+         
+        
+            <div  hidden="@_disabled">
+                
+            <div class="field is-grouped">
+                <div class="control">
+                    <button class="button is-link" type="submit" disabled="@Disabled()">Submit</button>
+                </div>
+                <div class="control">
+                    <button   type="reset" @onclick="Clear" class="button is-link is-light">Clear</button>
+                </div>
+            </div>
+            </div>
+       
+        </form>
+        
+    </div>
+                
+    
+</div>
+
+
+
+<div class="columns">
+    <div class="column  is-3">
+    
+        
+    </div>
+</div>
+
+
+
+@code {
+
+    private bool Flip(bool i) => !i;
+    
+    private bool _disabled = false;
+
+
+    private static readonly string RegexEmail = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
+    private static readonly string RegexPhone =   @"^(?:\+?(61))? ?(?:\((?=.*\)))?(0?[2-57-8])\)? ?(\d\d(?:[- ](?=\d{3})|(?!\d\d[- ]?\d[- ]))\d\d[- ]?\d[- ]?\d{3})$";
+    private static readonly string RegexName = @"^[a-z\s,\.'\-]+$";
+    
+    private static string ClassRegex(string? input, string regex)
+    {
+      
+        if (string.IsNullOrEmpty(input))
+        {
+            return "input";
+        }
+        return RegexValid(input, regex) ? "input is-success" : "input is-danger";
+    }
+    
+    private static string IconRegex(string? input, string regex)
+    {
+      
+        if (string.IsNullOrEmpty(input))
+        {
+            return "";
+        }
+        return RegexValid(input, regex) ? "fas fa-check" : "fas fa-exclamation-triangle";
+    }
+
+
+    private static bool RegexValid(string? input, string regex)
+    {
+        return !string.IsNullOrEmpty(input) && Regex.IsMatch(input, regex, RegexOptions.IgnoreCase);
+    }
+
+    [SupplyParameterFromForm]
+    private UserNew? Model { get; set; }
+
+    protected override void OnInitialized() => Model ??= new();
+
+    private void Submit()
+    {
+        Model.Id = new Random().Next(10000, 99999);
+        _disabled = true;
+        
+        Console.WriteLine(Model.Email);
+    }
+
+    public class UserNew
+    {
+        public int? Id { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Phone { get; set; }
+        public string? Email { get; set; }
+        public string? CardType{ get; set; }
+        public string? Agency { get; set; }
+    }
+
+
+    private bool Disabled() => !(RegexValid(Model.Email, RegexEmail) 
+                                 && RegexValid(Model.FirstName, RegexName) 
+                                 && RegexValid(Model.LastName, RegexName) 
+                                 && RegexValid(Model.Phone, RegexPhone));
+
+
+    private void Clear()
+    {
+        _disabled = false;
+        Model = new UserNew();
+      
+    }
+
+}
+
+
+
+
+
+
+
+
