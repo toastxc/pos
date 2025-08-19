@@ -1,4 +1,5 @@
 using BlazorWebAppMovies.Components;
+using BlazorWebAppMovies.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,3 +27,5 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
+
+
